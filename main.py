@@ -1,6 +1,10 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 
 app = Flask(__name__)
+
+@app.route("/")
+def home_redirect():
+    return redirect(url_for('index'))
 
 @app.route("/home")
 def home():
@@ -26,4 +30,5 @@ def vision():
 def programas():
     return render_template('programas.html')
 
-app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
