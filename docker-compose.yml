@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  myDB:
+    image: postgres:15.3
+    container_name: my-database
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: alumno
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: course-db
+    volumes:
+      - ./postgres_new:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pdAdmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
+    depends_on:
+      - myDB
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: alumno@google.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+
+  web:
+    build: .
+    container_name: my-web-app
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - myDB
+    environment:
+      DATABASE_URL: "postgresql://alumno:123456@myDB:5432/course-db"
+      FLASK_APP: main.py
+      # Clave secreta para Flask. ¡Cambiar por un valor seguro en producción!
+      SECRET_KEY: "c8a2a09a2915d5b6a1d8495e2f69c1d1f2b0a7f8e9d3c5b6a1d8495e2f69c1d1"

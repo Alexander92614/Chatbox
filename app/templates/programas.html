@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} Programas {% endblock %}
+
+{% block content %} 
+<div class="container">
+    <h1>Programas Ingeniería de Sistemas</h1><br>
+
+    <form action="{{ url_for('main.programas') }}" method="POST">
+        <div class="mb-3">
+            <label for="nombre_programa" class="form-label">Nombre del Programa</label>
+            <input type="text" class="form-control" id="nombre_programa" name="nombre_programa" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+
+    <hr>
+
+    <h2>Programas Registrados</h2>
+    {% if programas %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for programa in programas %}
+            <tr>
+                <td>{{ programa.id }}</td>
+                <td>{{ programa.nombre }}</td>
+                <td>
+                    <a href="{{ url_for('main.edit_programa', id=programa.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ url_for('main.delete_programa', id=programa.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este programa?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay programas registrados.</p>
+    {% endif %}
+</div>
+{% endblock %}

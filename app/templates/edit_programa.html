@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Programa{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-center">Editar Programa</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('main.edit_programa', id=programa.id) }}">
+                        <div class="mb-3">
+                            <label for="nombre_programa" class="form-label">Nombre del Programa</label>
+                            <input type="text" class="form-control" id="nombre_programa" name="nombre_programa" value="{{ programa.nombre }}" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ url_for('main.programas') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
