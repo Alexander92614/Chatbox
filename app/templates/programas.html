@@ -4,7 +4,7 @@
 
 {% block content %} 
 <div class="container">
-    <h1>Programas Ingeniería de Sistemas</h1><br>
+    <h1>Programas</h1>
 
     <form action="{{ url_for('main.programas') }}" method="POST">
         <div class="mb-3">
@@ -33,7 +33,7 @@
                 <td>{{ programa.nombre }}</td>
                 <td>
                     <a href="{{ url_for('main.edit_programa', id=programa.id) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ url_for('main.delete_programa', id=programa.id) }}" method="POST" style="display:inline;">
+                    <form action="{{ url_for('main.delete_programa', id=programa.id) }}" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este programa?');">Eliminar</button>
                     </form>
                 </td>
